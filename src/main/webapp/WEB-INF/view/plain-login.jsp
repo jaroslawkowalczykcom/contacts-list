@@ -76,7 +76,7 @@
                         <!-- HOME PAGE BUTTON -->
                         <div class="form-group center">
                             <div class="col-sm-12 controls center">
-                                <a href="${pageContext.request.contextPath}/customer/list"><button class="btn btn-light">Strona główna</button></a>
+                                <a href="${pageContext.request.contextPath}/user/list"><button class="btn btn-light">Strona główna</button></a>
                             </div>
                         </div>
                     </form:form>

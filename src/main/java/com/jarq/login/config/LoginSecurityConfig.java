@@ -33,12 +33,12 @@ public class LoginSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         http.authorizeRequests()
-                .antMatchers("/customer/showFormForAdd").hasRole("EMPLOYEE")
-                .antMatchers("/customer/saveCustomer").hasRole("EMPLOYEE")
-                .antMatchers("/customer/showFormForUpdate").hasRole("EMPLOYEE")
-                .antMatchers("/customer/delete").hasRole("EMPLOYEE")
+                .antMatchers("/user/showFormForAdd").hasRole("EMPLOYEE")
+                .antMatchers("/user/saveCustomer").hasRole("EMPLOYEE")
+                .antMatchers("/user/showFormForUpdate").hasRole("EMPLOYEE")
+                .antMatchers("/user/delete").hasRole("EMPLOYEE")
                 .antMatchers("/register/**").permitAll()
-                .antMatchers("/customer/**").permitAll()
+                .antMatchers("/user/**").permitAll()
                 .antMatchers("/resources/**").permitAll()
                 .and()
                 .formLogin()

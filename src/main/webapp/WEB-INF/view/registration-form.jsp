@@ -53,7 +53,7 @@
                             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                                 <ul class="nav nav-tabs">
                                     <li class="nav-item active">
-                                        <a class="nav-link" href="${pageContext.request.contextPath}/customer/list"><i
+                                        <a class="nav-link" href="${pageContext.request.contextPath}/user/list"><i
                                                 class="fas fa-home"></i> Strona Główna</a>
                                     </li>
                                     <li class="nav-item active">
@@ -106,7 +106,7 @@
                             <div class="form-group input-group-sm">
                                 <label>Nazwa użytkownika:</label>
                                 <form:input path="userName" type="text" class="form-control" name="username"
-                                            required="required" placeholder="Wprowadź nazwę użytkownika" onkeyup="uppercase(this)"/>
+                                            required="required" placeholder="Wprowadź nazwę użytkownika"/>
                             </div>
                         </div>
                         <div class="col-md-3 col-sm-3 col-xs-12">
