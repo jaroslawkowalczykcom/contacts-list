@@ -87,7 +87,6 @@ public class RegistrationController {
         }
 
         // Validation checks
-        // get down to business
 
         // encrypt the password
         String encodedPassword = passwordEncoder.encode(theCrmUser.getPassword());
@@ -96,7 +95,7 @@ public class RegistrationController {
         encodedPassword = "{bcrypt}" + encodedPassword;
 
         // give user default role of "employee"
-        List<GrantedAuthority> authorities = AuthorityUtils.createAuthorityList("ROLE_ADMIN");
+        List<GrantedAuthority> authorities = AuthorityUtils.createAuthorityList("ROLE_EMPLOYEE");
 
         // create user object (from Spring Security framework)
         User tempUser = new User(userName, encodedPassword, authorities);

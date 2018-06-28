@@ -71,7 +71,7 @@
 
                     <div class="col-md-4 col-sm-4 col-xs-12 center small bg-light">
                         <!--  Show username and roles -->
-                        <security:authorize access="hasAnyRole('MANAGER', 'ADMIN')">
+                        <security:authorize access="hasAnyRole('EMPLOYEE')">
                             <div class="mt-2">
                                 Zalogowany jako: <strong><security:authentication property="principal.username"/></strong>
                                 <br/> Uprawnienia: <strong><security:authentication property="principal.authorities"/></strong>
@@ -80,10 +80,10 @@
                     </div>
                     <div class="col-md-1 col-sm-1 col-xs-12 text-right bg-light">
                         <!-- Add logout button -->
-                        <security:authorize access="hasAnyRole('MANAGER', 'ADMIN')">
+                        <security:authorize access="hasAnyRole('EMPLOYEE')">
                             <div class="mt-3">
                                 <form:form action="${pageContext.request.contextPath}/logout" method="POST">
-                                    <input type="submit" value="Wyloguj" class="btn btn-danger btn-block btn-sm"/>
+                                    <input type="submit" value="Wyloguj" class="btn btn-secondary btn-block btn-sm"/>
                                 </form:form>
                             </div>
                         </security:authorize>
@@ -185,7 +185,7 @@
                         </div>
                         <div class="col-lg-2 col-sm-2 col-12">
                             <label>Czynność:</label>
-                            <input type="submit" class="btn btn-success btn-sm btn-block" value="Zapisz"/>
+                            <input type="submit" class="btn btn-primary btn-sm btn-block" value="Zapisz"/>
                         </div>
                     </div>
 

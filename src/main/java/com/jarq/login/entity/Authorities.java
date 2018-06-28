@@ -7,7 +7,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "authorities")
-public class Authorities extends Users{
+public class Authorities {
 
     @Id
     @Column(name = "username")

@@ -1,11 +1,9 @@
 package com.jarq.login.user;
 
-import com.jarq.login.entity.Customer;
-
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-public class CrmUser extends Customer {
+public class CrmUser {
 
     @NotNull(message = "is required")
     @Size(min = 1, message = "is required")
@@ -15,10 +13,7 @@ public class CrmUser extends Customer {
     @Size(min = 1, message = "is required")
     private String password;
 
-    Customer customer;
-
     public CrmUser() {
-
     }
 
     public String getUserName() {
@@ -35,15 +30,6 @@ public class CrmUser extends Customer {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-
-    public Customer getCustomer() {
-        return customer;
-    }
-
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
     }
 
     @Override

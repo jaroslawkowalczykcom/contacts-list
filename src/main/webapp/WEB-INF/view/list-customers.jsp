@@ -67,7 +67,7 @@
 
                     <div class="col-md-4 col-sm-4 col-xs-12 center small bg-light">
                         <!--  Show username and roles -->
-                        <security:authorize access="hasAnyRole('MANAGER', 'ADMIN')">
+                        <security:authorize access="hasAnyRole('EMPLOYEE')">
                         <div class="mt-2">
                             Zalogowany jako: <strong><security:authentication property="principal.username"/></strong>
                             <br/> Uprawnienia: <strong><security:authentication property="principal.authorities"/></strong>
@@ -76,7 +76,7 @@
                     </div>
                     <div class="col-md-1 col-sm-1 col-xs-12 text-right bg-light">
                         <!-- Add logout button -->
-                        <security:authorize access="hasAnyRole('MANAGER', 'ADMIN')">
+                        <security:authorize access="hasAnyRole('EMPLOYEE')">
                         <div class="mt-3">
                             <form:form action="${pageContext.request.contextPath}/logout" method="POST">
                                 <input type="submit" value="Wyloguj" class="btn btn-secondary btn-block btn-sm"/>
@@ -97,7 +97,7 @@
                     </div>
 
                     <!-- BUTTON add Contact -->
-                    <security:authorize access="hasAnyRole('MANAGER', 'ADMIN')">
+                    <security:authorize access="hasAnyRole('EMPLOYEE')">
                     <div class="col-md-2 col-sm-2 col-xs-12">
                         <div class="form-group">
                             <input type="button" value="Dodaj kontakt" class="btn btn-primary btn-block btn-sm"
@@ -111,14 +111,14 @@
                 <!--  HTML TABLE -->
 
                 <div class="table-responsive center">
-                    <table class="table table-hover table-sm table-bordered table-striped text-center min">
+                    <table class="table table-hover table-sm table-striped text-center min">
                         <thead class="table-secondary">
                         <tr>
                             <th scope="col">Imię</th>
                             <th scope="col">Nazwisko</th>
                             <th scope="col">Email</th>
                             <th scope="col">Szczegóły</th>
-                            <security:authorize access="hasAnyRole('MANAGER', 'ADMIN')">
+                            <security:authorize access="hasAnyRole('EMPLOYEE')">
                             <th colspan="2" scope="col">Czynność</th>
                             </security:authorize>
                         </tr>
@@ -152,7 +152,7 @@
                                 <td><a href="${detailsLink}"><i class="fas fa-info-circle ml-2 mr-2" style="color: green"></i></a>
                                 </td>
 
-                                <security:authorize access="hasAnyRole('MANAGER', 'ADMIN')">
+                                <security:authorize access="hasAnyRole('EMPLOYEE')">
                                 <td><a href="${updateLink}"><i class="fas fa-edit ml-2 mr-2" style="color: orange"></i></a>
                                 </td>
                                 <td><a href="${deleteLink}"

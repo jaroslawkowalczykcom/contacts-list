@@ -32,7 +32,7 @@
                 </div>
                 <div class="center">
                     <br/>
-                    <a href="${pageContext.request.contextPath}/" class="btn btn-success center">Powrót do strony głównej</a>
+                    <a href="${pageContext.request.contextPath}/" class="btn btn-primary center">Powrót do strony głównej</a>
                     <br/>
                 </div>
                 <!-- Footer -->

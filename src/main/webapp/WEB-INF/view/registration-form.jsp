@@ -67,7 +67,7 @@
 
                     <div class="col-md-4 col-sm-4 col-xs-12 center small bg-light">
                         <!--  Show username and roles -->
-                        <security:authorize access="hasAnyRole('MANAGER', 'ADMIN')">
+                        <security:authorize access="hasAnyRole('EMPLOYEE')">
                             <div class="mt-2">
                                 Zalogowany jako: <strong><security:authentication property="principal.username"/></strong>
                                 <br/> Uprawnienia: <strong><security:authentication property="principal.authorities"/></strong>
@@ -76,10 +76,10 @@
                     </div>
                     <div class="col-md-1 col-sm-1 col-xs-12 text-right bg-light">
                         <!-- Add logout button -->
-                        <security:authorize access="hasAnyRole('MANAGER', 'ADMIN')">
+                        <security:authorize access="hasAnyRole('EMPLOYEE')">
                             <div class="mt-3">
                                 <form:form action="${pageContext.request.contextPath}/logout" method="POST">
-                                    <input type="submit" value="Wyloguj" class="btn btn-danger btn-block btn-sm"/>
+                                    <input type="submit" value="Wyloguj" class="btn btn-secondary btn-block btn-sm"/>
                                 </form:form>
                             </div>
                         </security:authorize>
@@ -101,7 +101,7 @@
                     </c:if>
 
                     <div class="row">
-                        <div class="col-md-4 col-sm-4 col-xs-12">
+                        <div class="col-md-3 col-sm-3 col-xs-12">
                             <!-- User name -->
                             <div class="form-group input-group-sm">
                                 <label>Nazwa użytkownika:</label>
@@ -109,7 +109,7 @@
                                             required="required" placeholder="Wprowadź nazwę użytkownika" onkeyup="uppercase(this)"/>
                             </div>
                         </div>
-                        <div class="col-md-4 col-sm-4 col-xs-12">
+                        <div class="col-md-3 col-sm-3 col-xs-12">
                             <!-- Password -->
                             <div class="form-group input-group-sm">
                                 <label>Hasło:</label>
@@ -117,18 +117,18 @@
                                             required="required" placeholder="Wprowadź hasło"/>
                             </div>
                         </div>
-                        <div class="col-md-4 col-sm-4 col-xs-12">
+                        <div class="col-md-3 col-sm-3 col-xs-12">
                             <div class="form-group input-group-sm">
                                 <label>Imię:</label>
                                 <form:input path="firstName" type="text" class="form-control" name="password"
                                             required="required"/>
                             </div>
                         </div>
-                        <div class="col-md-2 col-sm-2 col-xs-12">
+                        <div class="col-md-3 col-sm-3 col-xs-12">
                             <!-- Register button -->
                             <div class="form-group">
                                 <label>Akcja:</label>
-                                <button type="submit" class="btn btn-success btn-sm btn-block">Rejestruj</button>
+                                <button type="submit" class="btn btn-primary btn-sm btn-block">Rejestruj</button>
                             </div>
                         </div>
                     </div>
