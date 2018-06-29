@@ -14,11 +14,15 @@ public interface UserService {
 
     public void saveUser(Users theUser);
 
-    public void saveUser(Authorities theAuthority);
+    public void saveUserAuthority(Authorities theAuthority);
 
     public void deleteUser(String theId);
 
     public void deleteUserAuthority(String theId);
 
     public List<Dictionary> getDictionary();
+
+    public  Boolean doesEmailExist(String sourceEmail);
+
+    public Boolean doesUsernameExist(String sourceUsername);
 }

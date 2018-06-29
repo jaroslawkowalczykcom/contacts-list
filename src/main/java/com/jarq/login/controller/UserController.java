@@ -1,6 +1,7 @@
 package com.jarq.login.controller;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 import com.jarq.login.entity.Authorities;
 import com.jarq.login.entity.Dictionary;
@@ -16,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.jarq.login.service.UserService;
 
+import javax.validation.Valid;
+
 @Controller
 @RequestMapping("/user")
 public class UserController {
@@ -23,6 +26,8 @@ public class UserController {
     // need to inject customer service
     @Autowired
     private UserService userService;
+
+    private Logger logger = Logger.getLogger(getClass().getName());
 
     @GetMapping("/list")
     public String listUsers(Model theModel) {
@@ -42,8 +47,9 @@ public class UserController {
         // create model attribute to bind form data
         Users theUser = new Users();
         Authorities theAuthority = new Authorities();
+        theUser.setAuthoritiesId(theAuthority);
 
-        // add User to model
+        // add User and Authority to model
         theModel.addAttribute("user", theUser);
         theModel.addAttribute("authority", theAuthority);
 
@@ -53,7 +59,7 @@ public class UserController {
         // set dictionary as a model
         theModel.addAttribute("dictionary", theDictionary);
 
-        return "user-form";
+        return "add-form";
     }
 
     @GetMapping("/showFormForUpdate")
@@ -97,12 +103,38 @@ public class UserController {
     }
 
     @PostMapping("/saveUser")
-    public String saveUser(@ModelAttribute("user") Users theUser,
-                           @ModelAttribute("authority") Authorities theAuthority) {
+    public String saveUser(@Valid @ModelAttribute("user") Users theUser,
+                           @ModelAttribute("authority") Authorities theAuthority,
+                           Model theModel) {
+
+        String usernameFromModel = theUser.getUsername();
+        String emailFromModel = theUser.getEmail();
+
+        // Validation statements
+
+        // check the database if email already exists
+        if (doesUsernameExist(usernameFromModel)) {
+            theModel.addAttribute("user", new Users());
+            theModel.addAttribute("registrationError", "Podana nazwa użytkownika jest już zajęta, użyj innej.");
+
+            logger.warning(">>>>> Email już istnieje.");
+
+            return "add-form";
+        }
+
+        // check the database if email already exists
+        if (doesEmailExist(emailFromModel)) {
+            theModel.addAttribute("user", new Users());
+            theModel.addAttribute("registrationError", "Podany email jest już zajęty, użyj innego.");
+
+            logger.warning(">>>>> Email już istnieje.");
+
+            return "add-form";
+        }
 
         // save the user using service
         userService.saveUser(theUser);
-        userService.saveUser(theAuthority);
+        userService.saveUserAuthority(theAuthority);
 
         return "redirect:/user/list";
     }
@@ -111,10 +143,24 @@ public class UserController {
     public String deleteUser(@RequestParam("userId") String theId) {
 
         // delete the user
-        userService.deleteUserAuthority(theId);
         userService.deleteUser(theId);
+        userService.deleteUserAuthority(theId);
 
         return "redirect:/user/list";
+    }
+
+    public Boolean doesUsernameExist(String sourceUsername) {
+
+        Boolean exist = userService.doesUsernameExist(sourceUsername);
+
+        return exist;
+    }
+
+    public Boolean doesEmailExist(String sourceEmail) {
+
+        Boolean exist = userService.doesEmailExist(sourceEmail);
+
+        return exist;
     }
 
 }

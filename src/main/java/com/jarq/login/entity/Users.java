@@ -1,9 +1,6 @@
 package com.jarq.login.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "users")
@@ -11,7 +8,7 @@ public class Users {
 
     @Id
     @Column(name = "username")
-    private String userName;
+    private String username;
 
     @Column(name = "password")
     private String password;
@@ -25,7 +22,7 @@ public class Users {
     @Column(name = "last_name")
     private String lastName;
 
-    @Column(name = "email")
+    @Column(unique = true, name = "email")
     private String email;
 
     @Column(name = "category")
@@ -40,12 +37,16 @@ public class Users {
     @Column(name = "born_date")
     private String bornDate;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "authorities_id")
+    private Authorities authoritiesId;
+
     public Users() {
     }
 
-    public Users(String userName, String password, int enabled, String firstName, String lastName, String email, String category, String subcategory, String phone, String bornDate) {
-        this.userName = userName;
-        this.password = password;
+    public Users(String username, String password, int enabled, String firstName, String lastName, String email, String category, String subcategory, String phone, String bornDate) {
+        this.username = username;
+        this.password = "{noop}" + password;
         this.enabled = enabled;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -56,12 +57,12 @@ public class Users {
         this.bornDate = bornDate;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
@@ -69,7 +70,7 @@ public class Users {
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        this.password = "{noop}" + password;
     }
 
     public int getEnabled() {
@@ -136,10 +137,18 @@ public class Users {
         this.bornDate = bornDate;
     }
 
+    public Authorities getAuthoritiesId() {
+        return authoritiesId;
+    }
+
+    public void setAuthoritiesId(Authorities authoritiesId) {
+        this.authoritiesId = authoritiesId;
+    }
+
     @Override
     public String toString() {
         return "Users{" +
-                "userName='" + userName + '\'' +
+                "username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", enabled=" + enabled +
                 ", firstName='" + firstName + '\'' +

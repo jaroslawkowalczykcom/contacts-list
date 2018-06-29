@@ -1,9 +1,6 @@
 package com.jarq.login.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "authorities")
@@ -11,25 +8,29 @@ public class Authorities {
 
     @Id
     @Column(name = "username")
-    private String userName;
+    private String username;
 
     @Column(name = "authority")
     private String authority;
 
+    @OneToOne(mappedBy = "authoritiesId",
+            cascade = CascadeType.ALL)
+    private Users user;
+
     public Authorities() {
     }
 
-    public Authorities(String userName, String authority) {
-        this.userName = userName;
+    public Authorities(String username, String authority) {
+        this.username = username;
         this.authority = authority;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getAuthority() {
@@ -43,7 +44,7 @@ public class Authorities {
     @Override
     public String toString() {
         return "Authorities{" +
-                "userName='" + userName + '\'' +
+                "userName='" + username + '\'' +
                 ", authority='" + authority + '\'' +
                 '}';
     }

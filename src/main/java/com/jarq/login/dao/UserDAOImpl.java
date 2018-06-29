@@ -30,12 +30,12 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public void saveUser(Authorities theAuthority) {
+    public void saveUserAuthority(Authorities theAuthority) {
 
         // get current hibernate session
         Session currentSession = sessionFactory.getCurrentSession();
 
-        // save or update user finally
+        // save or update authority finally
         currentSession.saveOrUpdate(theAuthority);
     }
 
@@ -106,6 +106,46 @@ public class UserDAOImpl implements UserDAO {
 
         // return the results
         return theDictionary;
+    }
+
+    @Override
+    public Boolean doesUsernameExist(String sourceUsername) {
+
+        // get the current hiberante session
+        Session currentSession = sessionFactory.getCurrentSession();
+
+        // delete object with primary key
+        Query<Users> theQuery = currentSession.createQuery("SELECT c FROM Users c WHERE c.username LIKE :source", Users.class);
+        theQuery.setParameter("source", sourceUsername);
+
+        // execute query and get result list
+        List<Users> targeUsers = theQuery.getResultList();
+
+        if (targeUsers.size() != 0) {
+            return true;
+        }
+
+        return false;
+    }
+
+    @Override
+    public Boolean doesEmailExist(String sourceEmail) {
+
+        // get the current hiberante session
+        Session currentSession = sessionFactory.getCurrentSession();
+
+        // delete object with primary key
+        Query<Users> theQuery = currentSession.createQuery("SELECT c FROM Users c WHERE c.email LIKE :source", Users.class);
+        theQuery.setParameter("source", sourceEmail);
+
+        // execute query and get result list
+        List<Users> targeUsers = theQuery.getResultList();
+
+        if (targeUsers.size() != 0) {
+            return true;
+        }
+
+        return false;
     }
 
 }

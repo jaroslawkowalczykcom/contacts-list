@@ -67,7 +67,7 @@
 
                     <div class="col-md-4 col-sm-4 col-xs-12 center small bg-light">
                         <!--  Show username and roles -->
-                        <security:authorize access="hasAnyRole('EMPLOYEE')">
+                        <security:authorize access="hasAnyRole('USER')">
                         <div class="mt-2">
                             Zalogowany jako: <strong><security:authentication property="principal.username"/></strong>
                             <br/> Uprawnienia: <strong><security:authentication property="principal.authorities"/></strong>
@@ -76,7 +76,7 @@
                     </div>
                     <div class="col-md-1 col-sm-1 col-xs-12 text-right bg-light">
                         <!-- Add logout button -->
-                        <security:authorize access="hasAnyRole('EMPLOYEE')">
+                        <security:authorize access="hasAnyRole('USER')">
                         <div class="mt-3">
                             <form:form action="${pageContext.request.contextPath}/logout" method="POST">
                                 <input type="submit" value="Wyloguj" class="btn btn-secondary btn-block btn-sm"/>
@@ -97,7 +97,7 @@
                     </div>
 
                     <!-- BUTTON add Contact -->
-                    <security:authorize access="hasAnyRole('EMPLOYEE')">
+                    <security:authorize access="hasAnyRole('USER')">
                     <div class="col-md-2 col-sm-2 col-xs-12">
                         <div class="form-group">
                             <input type="button" value="Dodaj kontakt" class="btn btn-primary btn-block btn-sm"
@@ -119,7 +119,7 @@
                             <th scope="col">Nazwisko</th>
                             <th scope="col">Email</th>
                             <th scope="col">Szczegóły</th>
-                            <security:authorize access="hasAnyRole('EMPLOYEE')">
+                            <security:authorize access="hasAnyRole('USER')">
                             <th colspan="2" scope="col">Czynność</th>
                             </security:authorize>
                         </tr>
@@ -131,21 +131,21 @@
 
                             <!-- "details" link with customer id -->
                             <c:url var="detailsLink" value="/user/showFormDetails">
-                                <c:param name="userId" value="${tempUser.userName}"/>
+                                <c:param name="userId" value="${tempUser.username}"/>
                             </c:url>
 
                             <!-- "update" link with customer id -->
                             <c:url var="updateLink" value="/user/showFormForUpdate">
-                                <c:param name="userId" value="${tempUser.userName}"/>
+                                <c:param name="userId" value="${tempUser.username}"/>
                             </c:url>
 
                             <!-- "delete" link with customer id -->
                             <c:url var="deleteLink" value="/user/delete">
-                                <c:param name="userId" value="${tempUser.userName}"/>
+                                <c:param name="userId" value="${tempUser.username}"/>
                             </c:url>
 
                             <tr>
-                                <td>${tempUser.userName}</td>
+                                <td>${tempUser.username}</td>
                                 <td>${tempUser.firstName}</td>
                                 <td>${tempUser.lastName}</td>
                                 <td>${tempUser.email}</td>
@@ -153,7 +153,7 @@
                                 <td><a href="${detailsLink}"><i class="fas fa-info-circle ml-2 mr-2" style="color: green"></i></a>
                                 </td>
 
-                                <security:authorize access="hasAnyRole('EMPLOYEE')">
+                                <security:authorize access="hasAnyRole('USER')">
                                 <td><a href="${updateLink}"><i class="fas fa-edit ml-2 mr-2" style="color: orange"></i></a>
                                 </td>
                                 <td><a href="${deleteLink}"

@@ -26,9 +26,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public void saveUser(Authorities theAuthority) {
+    public void saveUserAuthority(Authorities theAuthority) {
 
-        userDAO.saveUser(theAuthority);
+        userDAO.saveUserAuthority(theAuthority);
     }
 
     @Override
@@ -58,8 +58,19 @@ public class UserServiceImpl implements UserService {
         return userDAO.getDictionary();
     }
 
+    @Override
+    @Transactional
+    public Boolean doesUsernameExist(String sourceUsername) {
 
-    // USERS
+        return userDAO.doesUsernameExist(sourceUsername);
+    }
+
+    @Override
+    @Transactional
+    public Boolean doesEmailExist(String sourceEmail) {
+
+        return userDAO.doesEmailExist(sourceEmail);
+    }
 
     @Override
     @Transactional

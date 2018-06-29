@@ -44,15 +44,6 @@ public class RegistrationController {
         dataBinder.registerCustomEditor(String.class, stringTrimmerEditor);
     }
 
-    @GetMapping("/showRegistrationForm")
-    public String showMyLoginPage(Model theModel) {
-
-        theModel.addAttribute("crmUser", new CrmUser());
-
-        return "registration-form";
-
-    }
-
     @PostMapping("/processRegistrationForm")
     public String processRegistrationForm(
             @Valid @ModelAttribute("crmUser") CrmUser theCrmUser,

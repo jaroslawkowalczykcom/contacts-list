@@ -71,7 +71,7 @@
 
                     <div class="col-md-4 col-sm-4 col-xs-12 center small bg-light">
                         <!--  Show username and roles -->
-                        <security:authorize access="hasAnyRole('EMPLOYEE')">
+                        <security:authorize access="hasAnyRole('USER')">
                             <div class="mt-2">
                                 Zalogowany jako: <strong><security:authentication property="principal.username"/></strong>
                                 <br/> Uprawnienia: <strong><security:authentication property="principal.authorities"/></strong>
@@ -80,7 +80,7 @@
                     </div>
                     <div class="col-md-1 col-sm-1 col-xs-12 text-right bg-light">
                         <!-- Add logout button -->
-                        <security:authorize access="hasAnyRole('EMPLOYEE')">
+                        <security:authorize access="hasAnyRole('USER')">
                             <div class="mt-3">
                                 <form:form action="${pageContext.request.contextPath}/logout" method="POST">
                                     <input type="submit" value="Wyloguj" class="btn btn-secondary btn-block btn-sm"/>
@@ -116,7 +116,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="far fa-user"></i></span>
                                 </div>
-                                <form:input path="userName" type="text" class="form-control" disabled="true"/>
+                                <form:input path="username" type="text" class="form-control" disabled="true"/>
                             </div>
                         </div>
                         <div class="col-lg-3 col-sm-3 col-12">
