@@ -1,7 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
 <!DOCTYPE html>
 
@@ -74,8 +74,10 @@
                         <!--  Show username and roles -->
                         <security:authorize access="hasAnyRole('USER')">
                             <div class="mt-2">
-                                Zalogowany jako: <strong><security:authentication property="principal.username"/></strong>
-                                <br/> Uprawnienia: <strong><security:authentication property="principal.authorities"/></strong>
+                                Zalogowany jako: <strong><security:authentication
+                                    property="principal.username"/></strong>
+                                <br/> Uprawnienia: <strong><security:authentication
+                                    property="principal.authorities"/></strong>
                             </div>
                         </security:authorize>
                     </div>
@@ -104,7 +106,7 @@
                         </div>
                     </c:if>
 
-                    <br />
+                    <br/>
 
                     <div class="row">
                         <div class="col-lg-2 col-sm-2 col-12">
@@ -127,7 +129,8 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="far fa-user"></i></span>
                                 </div>
-                                <form:input path="username" type="text" class="form-control" id="username" required="required"/>
+                                <form:input path="username" type="text" class="form-control" id="username"
+                                            required="required"/>
                             </div>
                         </div>
                         <div class="col-lg-3 col-sm-3 col-12">
@@ -136,7 +139,10 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-key"></i></span>
                                 </div>
-                                <form:input path="password" type="text" class="form-control" required="required"/>
+                                <form:input path="password" type="text" class="form-control" required="required"
+                                            pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                                            title="Hasło musi zawierać przynajmniej jedną liczbę, jedną dużą i małą literę, oraz przynajmniej 8 znaków."
+                                            id="password" name="password"/>
                             </div>
                         </div>
                         <div class="col-lg-3 col-sm-3 col-12">
@@ -202,20 +208,32 @@
                                             class="fab fa-get-pocket"></i></label>
                                 </div>
                                 <form:select path="category" class="form-control form-control-sm"
-                                             id="inputGroupSelect01" onclick="showSubcategory()">
+                                             id="inputGroupSelect01" onclick="showSubcategory()" required="required">
                                     <form:option value="służbowy">służbowy</form:option>
                                     <form:option value="prywatny">prywatny</form:option>
                                     <form:option value="inny">inny</form:option>
                                 </form:select>
                             </div>
                         </div>
-                        <div class="col-lg-2 col-sm-2 col-12">
+                        <div id="subcategory_other" class="col-lg-2 col-sm-2 col-12">
                             <label>Podkategoria:</label>
                             <div class="input-group input-group-sm mb-3">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="far fa-caret-square-down"></i></span>
                                 </div>
-                                <form:input path="subcategory" type="text" class="form-control" id="subcategory" required="required"/>
+                                <form:input path="subcategory" type="text" class="form-control" id="subcategory"/>
+                            </div>
+                        </div>
+                        <div id="subcategory_dictionary" class="col-lg-2 col-sm-2 col-12">
+                            <label>Podkategoria:</label>
+                            <div class="input-group input-group-sm mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="far fa-caret-square-down"></i></span>
+                                </div>
+                                <form:select path="subcategory" class="form-control">
+                                    <form:option value="" label="- wybierz -" />
+                                    <form:options items="${dictionary}" itemValue="word" itemLabel="word" />
+                                </form:select>
                             </div>
                         </div>
                     </div>
@@ -229,14 +247,13 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="far fa-caret-square-down"></i></span>
                                     </div>
-                                    <form:input path="authority" type="text" class="form-control" value="ROLE_USER" required="required"/>
+                                    <form:input path="authority" type="text" class="form-control" value="ROLE_USER"
+                                                required="required"/>
                                 </div>
                             </div>
                         </div>
                     </form:form>
-
                 </form:form>
-
 
                 <!-- Footer -->
                 <div class="text-align: center">
@@ -252,23 +269,28 @@
 <!-- Auto fill -->
 <script type="text/javascript">
 
+    window.onload = function() {
+        document.getElementById("subcategory_other").style.display = "none";
+    };
+
     function showSubcategory() {
 
         var category = document.getElementById('inputGroupSelect01').value;
 
         if (category === "prywatny") {
             document.getElementById("subcategory").placeholder = " ";
-            document.getElementById("subcategory").disabled = true;
+            document.getElementById("subcategory_dictionary").style.display = "none";
+            document.getElementById("subcategory_other").style.display = "none";
         } else if (category === "służbowy") {
-            document.getElementById("subcategory").disabled = false;
-            document.getElementById("subcategory").placeholder = "wybierz";
+            document.getElementById("subcategory_dictionary").style.display = "block";
+            document.getElementById("subcategory_other").style.display = "none";
         } else if (category === "inny") {
-            document.getElementById("subcategory").disabled = false;
+            document.getElementById("subcategory_dictionary").style.display = "none";
+            document.getElementById("subcategory_other").style.display = "block";
             document.getElementById("subcategory").placeholder = "wpisz";
         }
     }
 </script>
-
 
 <!-- DatePicker -->
 <script type="text/javascript">

@@ -69,26 +69,28 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public void deleteUser(String theId) {
 
-        // get the current hiberante session
+        // get the current hibernate session
         Session currentSession = sessionFactory.getCurrentSession();
 
         // delete object with primary key
         Query theQuery = currentSession.createQuery("delete from Users where id=:userId");
         theQuery.setParameter("userId", theId);
 
+        // execute update
         theQuery.executeUpdate();
     }
 
     @Override
     public void deleteUserAuthority(String theId) {
 
-        // get the current hiberante session
+        // get the current hibernate session
         Session currentSession = sessionFactory.getCurrentSession();
 
         // delete object with primary key
         Query theQuery = currentSession.createQuery("delete from Authorities where id=:userId");
         theQuery.setParameter("userId", theId);
 
+        // execute update
         theQuery.executeUpdate();
     }
 
@@ -111,41 +113,40 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public Boolean doesUsernameExist(String sourceUsername) {
 
-        // get the current hiberante session
+        // get the current hibernate session
         Session currentSession = sessionFactory.getCurrentSession();
 
-        // delete object with primary key
+        // select object with source parameter
         Query<Users> theQuery = currentSession.createQuery("SELECT c FROM Users c WHERE c.username LIKE :source", Users.class);
         theQuery.setParameter("source", sourceUsername);
 
         // execute query and get result list
-        List<Users> targeUsers = theQuery.getResultList();
+        List<Users> targetUsers = theQuery.getResultList();
 
-        if (targeUsers.size() != 0) {
+        // check if username exist and return result
+        if (targetUsers.size() != 0) {
             return true;
         }
-
         return false;
     }
 
     @Override
     public Boolean doesEmailExist(String sourceEmail) {
 
-        // get the current hiberante session
+        // get the current hibernate session
         Session currentSession = sessionFactory.getCurrentSession();
 
-        // delete object with primary key
+        // select object with source parameter
         Query<Users> theQuery = currentSession.createQuery("SELECT c FROM Users c WHERE c.email LIKE :source", Users.class);
         theQuery.setParameter("source", sourceEmail);
 
         // execute query and get result list
-        List<Users> targeUsers = theQuery.getResultList();
+        List<Users> targetUsers = theQuery.getResultList();
 
-        if (targeUsers.size() != 0) {
+        // check if email exist and return result
+        if (targetUsers.size() != 0) {
             return true;
         }
-
         return false;
     }
-
 }

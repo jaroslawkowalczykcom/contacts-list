@@ -26,9 +26,8 @@
     <!-- Global JS -->
     <script src="${pageContext.request.contextPath}/resources/js/global.js"></script>
 
-    <title>Lista kontaktów - Zapisz</title>
+    <title>Lista kontaktów - Aktualizuj</title>
 </head>
-
 
 <body>
 
@@ -93,7 +92,7 @@
                 <br/>
 
                 <!-- SAVE NEW USER -->
-                <form:form action="saveUser" modelAttribute="user" method="POST">
+                <form:form action="updateUser" modelAttribute="user" method="POST">
 
                     <br />
 
@@ -127,7 +126,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-key"></i></span>
                                 </div>
-                                <form:input path="password" type="text" class="form-control"/>
+                                <form:input path="password" type="text" class="form-control" id="password"/>
                             </div>
                         </div>
                         <div class="col-lg-3 col-sm-3 col-12">
@@ -200,13 +199,25 @@
                                 </form:select>
                             </div>
                         </div>
-                        <div class="col-lg-2 col-sm-2 col-12">
+                        <div id="subcategory_other" class="col-lg-2 col-sm-2 col-12">
                             <label>Podkategoria:</label>
                             <div class="input-group input-group-sm mb-3">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="far fa-caret-square-down"></i></span>
                                 </div>
                                 <form:input path="subcategory" type="text" class="form-control" id="subcategory"/>
+                            </div>
+                        </div>
+                        <div id="subcategory_dictionary" class="col-lg-2 col-sm-2 col-12">
+                            <label>Podkategoria:</label>
+                            <div class="input-group input-group-sm mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="far fa-caret-square-down"></i></span>
+                                </div>
+                                <form:select path="subcategory" class="form-control">
+                                    <form:option value="" label="- wybierz -" />
+                                    <form:options items="${dictionary}" itemValue="word" itemLabel="word" />
+                                </form:select>
                             </div>
                         </div>
                     </div>
@@ -225,7 +236,6 @@
                             </div>
                         </div>
                     </form:form>
-
                 </form:form>
 
 
@@ -243,23 +253,30 @@
 <!-- Auto fill -->
 <script type="text/javascript">
 
+    window.onload = function() {
+        var passValue = document.getElementById("password").value;
+        document.getElementById("password").value = passValue.substr(6,passValue.length);
+        document.getElementById("subcategory_other").style.display = "none";
+    }
+
     function showSubcategory() {
 
         var category = document.getElementById('inputGroupSelect01').value;
 
         if (category === "prywatny") {
             document.getElementById("subcategory").placeholder = " ";
-            document.getElementById("subcategory").disabled = true;
+            document.getElementById("subcategory_dictionary").style.display = "none";
+            document.getElementById("subcategory_other").style.display = "none";
         } else if (category === "służbowy") {
-            document.getElementById("subcategory").disabled = false;
-            document.getElementById("subcategory").placeholder = "wybierz";
+            document.getElementById("subcategory_dictionary").style.display = "block";
+            document.getElementById("subcategory_other").style.display = "none";
         } else if (category === "inny") {
-            document.getElementById("subcategory").disabled = false;
+            document.getElementById("subcategory_dictionary").style.display = "none";
+            document.getElementById("subcategory_other").style.display = "block";
             document.getElementById("subcategory").placeholder = "wpisz";
         }
     }
 </script>
-
 
 <!-- DatePicker -->
 <script type="text/javascript">

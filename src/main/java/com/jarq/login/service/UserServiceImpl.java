@@ -17,6 +17,7 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserDAO userDAO;
 
+    // user service forward methods to userDAO
     @Override
     @Transactional
     public void saveUser(Users theUser) {

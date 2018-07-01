@@ -125,7 +125,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-key"></i></span>
                                 </div>
-                                <form:input path="password" type="password" class="form-control" disabled="true"/>
+                                <form:input path="password" type="password" class="form-control" id="password" disabled="true"/>
                             </div>
                         </div>
                         <div class="col-lg-3 col-sm-3 col-12">
@@ -221,6 +221,12 @@
     </div>
 </div>
 
+<script type="text/javascript">
+    window.onload = function() {
+        var passValue = document.getElementById("password").value;
+        document.getElementById("password").value = passValue.substr(6,passValue.length);
+    }
+</script>
 
 
 <!-- DatePicker -->

@@ -32,12 +32,13 @@ public class LoginSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
+        // authorize requests list
         http.authorizeRequests()
                 .antMatchers("/user/showFormForAdd").hasRole("USER")
-                .antMatchers("/user/saveCustomer").hasRole("USER")
+                .antMatchers("/user/saveUser").hasRole("USER")
                 .antMatchers("/user/showFormForUpdate").hasRole("USER")
+                .antMatchers("/user/updateUser").hasRole("USER")
                 .antMatchers("/user/delete").hasRole("USER")
-                .antMatchers("/register/**").permitAll()
                 .antMatchers("/user/**").permitAll()
                 .antMatchers("/resources/**").permitAll()
                 .and()
@@ -49,7 +50,6 @@ public class LoginSecurityConfig extends WebSecurityConfigurerAdapter {
                 .logout().permitAll()
                 .and()
                 .exceptionHandling().accessDeniedPage("/access-denied");
-
     }
 
     @Bean
@@ -58,9 +58,6 @@ public class LoginSecurityConfig extends WebSecurityConfigurerAdapter {
         jdbcUserDetailsManager.setDataSource(securityDataSource);
         return jdbcUserDetailsManager;
     }
-
-
-
 }
 
 

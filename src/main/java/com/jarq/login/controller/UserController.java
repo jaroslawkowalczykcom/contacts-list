@@ -23,19 +23,25 @@ import javax.validation.Valid;
 @RequestMapping("/user")
 public class UserController {
 
-    // need to inject customer service
     @Autowired
     private UserService userService;
 
     private Logger logger = Logger.getLogger(getClass().getName());
 
+    @ModelAttribute("dictionary")
+    public List<Dictionary> loadAllDictionary() {
+
+        // return dictionary from service
+        return userService.getDictionary();
+    }
+
     @GetMapping("/list")
     public String listUsers(Model theModel) {
 
-        // get users from dao
+        // get Users from dao
         List<Users> theUsers = userService.getUsers();
 
-        // add the users to the model
+        // add the Users to the model
         theModel.addAttribute("users", theUsers);
 
         return "list-users";
@@ -53,34 +59,23 @@ public class UserController {
         theModel.addAttribute("user", theUser);
         theModel.addAttribute("authority", theAuthority);
 
-        // get dictionary from service
-        List<Dictionary> theDictionary = userService.getDictionary();
-
-        // set dictionary as a model
-        theModel.addAttribute("dictionary", theDictionary);
-
+        // send over to form
         return "add-form";
     }
 
     @GetMapping("/showFormForUpdate")
     public String showFormForUpdate(@RequestParam("userId") String theId, Model theModel) {
 
-        // get the user from service
+        // get the User from service
         Users theUser = userService.getUser(theId);
         Authorities theAuthority = new Authorities();
 
-        // set user as a model attribute to pre-populate the form
+        // set User and Authority as a model attribute to pre-populate the form
         theModel.addAttribute("user", theUser);
         theModel.addAttribute("authority", theAuthority);
 
-        // get dictionary from service
-        List<Dictionary> theDictionary = userService.getDictionary();
-
-        // set dictionary as a model
-        theModel.addAttribute("dictionary", theDictionary);
-
         // send over to form
-        return "user-form";
+        return "update-form";
     }
 
     @GetMapping("/showFormDetails")
@@ -92,12 +87,6 @@ public class UserController {
         // set user as a model attribute to pre-populate the form
         theModel.addAttribute("user", theUser);
 
-        // get dictionary from service
-        List<Dictionary> theDictionary = userService.getDictionary();
-
-        // set dictionary as a model
-        theModel.addAttribute("dictionary", theDictionary);
-
         // send over to form
         return "user-details";
     }
@@ -107,12 +96,13 @@ public class UserController {
                            @ModelAttribute("authority") Authorities theAuthority,
                            Model theModel) {
 
+        // get username and email from form
         String usernameFromModel = theUser.getUsername();
         String emailFromModel = theUser.getEmail();
 
         // Validation statements
 
-        // check the database if email already exists
+        // check the database if username already exists
         if (doesUsernameExist(usernameFromModel)) {
             theModel.addAttribute("user", new Users());
             theModel.addAttribute("registrationError", "Podana nazwa użytkownika jest już zajęta, użyj innej.");
@@ -132,7 +122,19 @@ public class UserController {
             return "add-form";
         }
 
-        // save the user using service
+        // save the User and Authority using service
+        userService.saveUser(theUser);
+        userService.saveUserAuthority(theAuthority);
+
+        return "redirect:/user/list";
+    }
+
+    @PostMapping("/updateUser")
+    public String UpdateUser(@ModelAttribute("user") Users theUser,
+                             @ModelAttribute("authority") Authorities theAuthority,
+                             Model theModel) {
+
+        // save the User and Authority using service
         userService.saveUser(theUser);
         userService.saveUserAuthority(theAuthority);
 
@@ -142,7 +144,7 @@ public class UserController {
     @GetMapping("/delete")
     public String deleteUser(@RequestParam("userId") String theId) {
 
-        // delete the user
+        // delete the User and Authority using service
         userService.deleteUser(theId);
         userService.deleteUserAuthority(theId);
 
@@ -151,6 +153,7 @@ public class UserController {
 
     public Boolean doesUsernameExist(String sourceUsername) {
 
+        // Get boolean from service checking if username exist
         Boolean exist = userService.doesUsernameExist(sourceUsername);
 
         return exist;
@@ -158,6 +161,7 @@ public class UserController {
 
     public Boolean doesEmailExist(String sourceEmail) {
 
+        // Get boolean from service checking if username exist
         Boolean exist = userService.doesEmailExist(sourceEmail);
 
         return exist;
